@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./css/modal.css" />
     <title>Modal Window</title>
   </head>
   <body>
@@ -13,10 +14,27 @@
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores,
         labore.
       </p>
+      <a href="#">link</a>
     </div>
-    <div class="modal-layer">
-      <div>window</div>
+    <div class="wmodal">
+      <div class="wmodal-overlay">
+        <div class="wmodal-window">
+          <div class="wmodal-header">
+            <h1>Header</h1>
+          </div>
+          <div class="wmodal-body">
+            <p>Lorem ipsum dolor sit amet.</p>
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
+          <div class="wmodal-footer">
+            <button>Cancel</button>
+            <button>OK</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="app.js"></script>
+    <script src="./base.js"></script>
+    <script src="./plugins/modal.js"></script>
+    <script src="./index.js"></script>
   </body>
 </html>
