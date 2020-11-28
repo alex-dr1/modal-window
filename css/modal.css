@@ -1,11 +1,13 @@
-.wmodal {
+.wmodal.open {
+  visibility: visible;
 }
 
-.wmodal.hide {
+.wmodal {
   visibility: hidden;
 }
 
 .wmodal-overlay {
+  margin: 0;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -15,20 +17,45 @@
 }
 
 .wmodal-window {
+  width: 400px;
+  margin: 0 auto;
   margin-top: 100px;
-  margin-inline: 20%;
+  border-radius: 4px;
   background-color: white;
 }
 
 .wmodal-header {
-  background-color: rgb(188, 240, 241);
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  border-bottom: 1px solid gray;
+}
+
+.wmodal-title {
+  font-size: 1.5rem;
+}
+
+.wmodal-close {
+  width: 1.7rem;
+  font-size: 1.5rem;
+  color: whitesmoke;
+  border-radius: 5px;
+  background-color: rgb(253, 165, 150);
+  text-align: center;
+}
+
+.wmodal-close:hover {
+  background-color: tomato;
+  cursor: pointer;
 }
 
 .wmodal-body {
-  height: 50px;
+  padding: 5px;
+  height: 100px;
+  border-bottom: 1px solid gray;
 }
 
 .wmodal-footer {
-  background-color: rgb(188, 240, 241);
+  padding: 4px;
   text-align: right;
 }

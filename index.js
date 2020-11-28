@@ -1,3 +1,3 @@
 console.log('Running app...')
 
-myModal = $.modal()
+modal = $.modal()
