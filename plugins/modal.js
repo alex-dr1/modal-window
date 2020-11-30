@@ -4,16 +4,17 @@ $.modal = function (options) {
   function _createModal(options) {
     const modal = document.createElement('div')
     modal.classList.add('wmodal')
-    modal.innerHTML = `    
+    modal.insertAdjacentHTML(
+      'afterbegin',
+      `    
     <div class="wmodal-overlay">
-      <div class="wmodal-window">
+      <div class="wmodal-window" style="width: ${options.width || '300px'};">
         <div class="wmodal-header">
-          <span class="wmodal-title">Title</span>
-          <span class="wmodal-close">&times;</span>
+          <span class="wmodal-title">${options.title || 'Заголовок'}</span>
+          ${options.closable ? '<span class="wmodal-close">&times;</span>' : ''}
         </div>
         <div class="wmodal-body">
-          <p>Lorem ipsum dolor sit amet.</p>
-          <p>Lorem ipsum dolor sit amet.</p>
+          ${options.content || ''}
         </div>
         <div class="wmodal-footer">
           <button>Cancel</button>
@@ -22,18 +23,18 @@ $.modal = function (options) {
       </div>
     </div>
     `
+    )
     document.body.appendChild(modal)
     return modal
   }
 
   function close() {
     if (_$modal === null) return
-    if (!(_$modal instanceof HTMLDivElement)) return
     _$modal.classList.remove('open')
   }
 
   function open() {
-    _$modal = _createModal()
+    _$modal = _createModal(options)
     _$modal.classList.add('open')
   }
 
@@ -50,10 +51,11 @@ $.modal = function (options) {
 
 /*
 options
-  title: string
-  closable: boolean
-  content: string
-  width: string (400px)
+  +title: string
+  +closable: boolean
+  +content: string
+  +width: string (400px)
+  footerButtons
   destroy(): void -удалить из дом-дерева
   ---------
   setContent(html: string): void
