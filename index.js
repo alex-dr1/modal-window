@@ -8,4 +8,22 @@ modal = $.modal({
   asperiores soluta ratione animi excepturi, impedit hic recusandae
   reprehenderit nisi eligendi tenetur.</p>`,
   width: '600px',
+  footerButton: [
+    {
+      className: 'primary',
+      text: 'Cancel',
+      handler: () => {
+        modal.close()
+      },
+    },
+    {
+      className: 'success',
+      text: 'OK',
+      handler: () => {
+        modal.close()
+      },
+    },
+  ],
 })
+
+modal.open()

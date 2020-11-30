@@ -1,66 +1,85 @@
 $.modal = function (options) {
-  let _$modal = null
+  const _$modal = _createModal(options)
+
+  function noop() {}
+
+  function _createFooterButton(footerButton) {
+    const wmodalFooter = document.createElement('div')
+    wmodalFooter.classList.add('wmodal-footer')
+    footerButton.forEach((btn) => {
+      const button = document.createElement('button')
+      button.classList.add('btn')
+      button.classList.add(`btn-${btn.className || 'secondary'}`)
+      button.classList.add('ml3')
+      button.textContent = btn.text || 'none'
+      button.onclick = btn.handler || noop
+      wmodalFooter.appendChild(button)
+    })
+    return wmodalFooter
+  }
 
   function _createModal(options) {
-    const modal = document.createElement('div')
-    modal.classList.add('wmodal')
-    modal.insertAdjacentHTML(
+    const wmodal = document.createElement('div')
+    wmodal.classList.add('wmodal')
+    wmodal.insertAdjacentHTML(
       'afterbegin',
       `    
-    <div class="wmodal-overlay">
+    <div class="wmodal-overlay" data-close>
       <div class="wmodal-window" style="width: ${options.width || '300px'};">
         <div class="wmodal-header">
           <span class="wmodal-title">${options.title || 'Заголовок'}</span>
-          ${options.closable ? '<span class="wmodal-close">&times;</span>' : ''}
+          ${
+            options.closable
+              ? '<span class="wmodal-close" data-close>&times;</span>'
+              : ''
+          }
         </div>
         <div class="wmodal-body">
           ${options.content || ''}
-        </div>
-        <div class="wmodal-footer">
-          <button>Cancel</button>
-          <button>OK</button>
         </div>
       </div>
     </div>
     `
     )
-    document.body.appendChild(modal)
-    return modal
+
+    options.footerButton &&
+      wmodal
+        .querySelector('.wmodal-window')
+        .insertAdjacentElement(
+          'beforeend',
+          _createFooterButton(options.footerButton)
+        )
+
+    wmodal.addEventListener('click', clickHandler)
+
+    document.body.appendChild(wmodal)
+    return wmodal
+  }
+
+  function clickHandler(event) {
+    if (event.target.dataset.close !== undefined) {
+      _modal.close()
+    }
+  }
+
+  let _modal = {
+    close,
+    open,
   }
 
   function close() {
-    if (_$modal === null) return
     _$modal.classList.remove('open')
   }
 
   function open() {
-    _$modal = _createModal(options)
     _$modal.classList.add('open')
   }
 
   function destroy() {
-    document.body.removeChild(_$modal)
+    // ????????????? Проверить
+    _$modal.removeEventListener('click', clickHandler)
+    _$modal.parentElement.removeChild(_$modal)
   }
 
-  return {
-    close,
-    open,
-    destroy,
-  }
+  return Object.assign(_modal, { destroy })
 }
-
-/*
-options
-  +title: string
-  +closable: boolean
-  +content: string
-  +width: string (400px)
-  footerButtons
-  destroy(): void -удалить из дом-дерева
-  ---------
-  setContent(html: string): void
-  onClose():void
-  onOpen():void
-  beforeClose(): boolean
-
-*/
