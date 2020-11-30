@@ -1,3 +1,3 @@
-#Modal window
+## Modal window
 
 модальное окно на javascript
