@@ -1,22 +1,32 @@
 $.modal = function (options) {
-  const _$modal = _createModal(options)
+  if (!options) return false
 
-  function noop() {}
+  const _noop = () => {}
 
-  function _createFooterButton(footerButton) {
+  const _createFooterButton = (footerButton) => {
     const wmodalFooter = document.createElement('div')
     wmodalFooter.classList.add('wmodal-footer')
-    footerButton.forEach((btn) => {
+    const idxFocus = footerButton.length - 1
+    footerButton.forEach((btn, index) => {
       const button = document.createElement('button')
       button.classList.add('btn')
       button.classList.add(`btn-${btn.className || 'secondary'}`)
       button.classList.add('ml3')
       button.textContent = btn.text || 'none'
-      button.onclick = btn.handler || noop
+      button.onclick = btn.handler || _noop
+      if (idxFocus === index) button.autofocus = true
       wmodalFooter.appendChild(button)
     })
     return wmodalFooter
   }
+
+  const clickHandler = (event) => {
+    if (event.target.dataset.close !== undefined) {
+      _modal.close()
+    }
+  }
+
+  const _$modal = _createModal(options)
 
   function _createModal(options) {
     const wmodal = document.createElement('div')
@@ -53,33 +63,26 @@ $.modal = function (options) {
     wmodal.addEventListener('click', clickHandler)
 
     document.body.appendChild(wmodal)
+
     return wmodal
   }
 
-  function clickHandler(event) {
-    if (event.target.dataset.close !== undefined) {
-      _modal.close()
-    }
+  const _modal = {
+    close() {
+      _$modal.classList.remove('open')
+    },
+    open() {
+      _$modal.classList.add('open')
+    },
   }
 
-  let _modal = {
-    close,
-    open,
-  }
-
-  function close() {
-    _$modal.classList.remove('open')
-  }
-
-  function open() {
-    _$modal.classList.add('open')
-  }
-
-  function destroy() {
-    // ????????????? Проверить
-    _$modal.removeEventListener('click', clickHandler)
-    _$modal.parentElement.removeChild(_$modal)
-  }
-
-  return Object.assign(_modal, { destroy })
+  return Object.assign(_modal, {
+    destroy() {
+      _$modal.removeEventListener('click', clickHandler)
+      _$modal.parentElement.removeChild(_$modal)
+    },
+    setContent(html) {
+      _$modal.querySelector('.wmodal-body').innerHTML = html
+    },
+  })
 }

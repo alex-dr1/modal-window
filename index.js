@@ -1,6 +1,6 @@
 console.log('Running app...')
 
-modal = $.modal({
+myModal = $.modal({
   title: 'Модальное окно',
   closable: true,
   content: `<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam ipsam
@@ -13,17 +13,17 @@ modal = $.modal({
       className: 'primary',
       text: 'Cancel',
       handler: () => {
-        modal.close()
+        myModal.close()
       },
     },
     {
       className: 'success',
       text: 'OK',
       handler: () => {
-        modal.close()
+        myModal.close()
       },
     },
   ],
 })
 
-modal.open()
+myModal.open()
