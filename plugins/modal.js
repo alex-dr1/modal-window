@@ -1,20 +1,20 @@
 $.modal = function (options) {
   if (!options) return false
 
+  let destroyed = false
+
   const _noop = () => {}
 
   const _createFooterButton = (footerButton) => {
     const wmodalFooter = document.createElement('div')
     wmodalFooter.classList.add('wmodal-footer')
-    const idxFocus = footerButton.length - 1
-    footerButton.forEach((btn, index) => {
+    footerButton.forEach((btn) => {
       const button = document.createElement('button')
       button.classList.add('btn')
       button.classList.add(`btn-${btn.className || 'secondary'}`)
-      button.classList.add('ml3')
+      button.classList.add('ml-1')
       button.textContent = btn.text || 'none'
       button.onclick = btn.handler || _noop
-      if (idxFocus === index) button.autofocus = true
       wmodalFooter.appendChild(button)
     })
     return wmodalFooter
@@ -70,8 +70,15 @@ $.modal = function (options) {
   const _modal = {
     close() {
       _$modal.classList.remove('open')
+      if (typeof options.onClose === 'function') {
+        options.onClose()
+      }
     },
     open() {
+      if (destroyed) {
+        console.log('Window modal is destroyed')
+        return
+      }
       _$modal.classList.add('open')
     },
   }
@@ -80,6 +87,7 @@ $.modal = function (options) {
     destroy() {
       _$modal.removeEventListener('click', clickHandler)
       _$modal.parentElement.removeChild(_$modal)
+      destroyed = true
     },
     setContent(html) {
       _$modal.querySelector('.wmodal-body').innerHTML = html

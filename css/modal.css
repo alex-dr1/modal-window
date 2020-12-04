@@ -28,7 +28,7 @@
   display: flex;
   justify-content: space-between;
   padding: 5px;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #d5d4d4;
 }
 
 .wmodal-title {
@@ -40,25 +40,17 @@
   font-size: 1.5rem;
   color: whitesmoke;
   border-radius: 5px;
-  background-color: rgb(253, 165, 150);
+  background-color: rgb(255, 38, 0);
   text-align: center;
-}
-
-.wmodal-close:hover {
-  background-color: tomato;
   cursor: pointer;
 }
 
 .wmodal-body {
   padding: 5px;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #d5d4d4;
 }
 
 .wmodal-footer {
   padding: 4px;
   text-align: right;
-}
-
-.ml3 {
-  margin-left: 4px;
 }
